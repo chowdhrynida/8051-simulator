@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="model.css">
+  <link rel="stylesheet" href="story.css">
 </head>
 <body data-page="model">
 
@@ -32,15 +33,12 @@
   <p class="count">Step 6 of 8</p>
   <h1>Hardware to software</h1>
 
-  <p class="lede">A simulator is a second chip made of code. Three ideas are enough to build it.</p>
-  <div class="rules">
-    <div class="rule"><i>1</i><h3>A part becomes a value</h3><p>A register is one number kept to 8 bits. Memory is an array of bytes. A pin is one bit of a port value.</p></div>
-    <div class="rule"><i>2</i><h3>A behaviour becomes a function</h3><p>Each opcode is a few lines that read and change those values, exactly as the chip's logic would.</p></div>
-    <div class="rule"><i>3</i><h3>Time becomes a counter</h3><p>Every instruction adds its machine cycles. Timers and the UART simply count those cycles.</p></div>
-  </div>
+  <p class="lede">A simulator is a second chip made of code. Let us build it together, one small idea at a time. Each chapter shows the real hardware first, then the same thing as code.</p>
+  <div id="story"></div>
 
-  <h2 class="mini" style="font-size:1.3rem;margin-top:0">See it happen</h2>
-  <p class="lede">Step through one real program. On the left is the chip. On the right is the same part inside the simulator, changing at the same moment. The program ends by sending the letter A out of the serial port.</p>
+  <div id="demoTop" style="scroll-margin-top:1rem"></div>
+  <h2 class="mini" style="font-size:1.5rem;margin-top:2.5rem">Everything together</h2>
+  <p class="lede">Now one real program uses every idea at once. On the left is the chip. On the right is the same part inside the simulator, changing at the same moment. The program ends by sending the letter A out of the serial port.</p>
 
   <div class="tw-ctl">
     <button id="step" type="button">Step</button>
@@ -112,5 +110,6 @@
 <script src="sim.js"></script>
 <script src="pages.js"></script>
 <script src="model.js"></script>
+<script src="story.js"></script>
 </body>
 </html>

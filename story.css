@@ -1,0 +1,36 @@
+/* Guided lesson on the Hardware to software page */
+.st-dots{display:flex;gap:.4rem;flex-wrap:wrap;margin:0 0 1rem}
+.st-dot{font:600 .8rem var(--display);color:var(--muted);background:var(--mask-dark);border:1px solid var(--edge);border-radius:999px;padding:.3rem .8rem;cursor:pointer}
+.st-dot.on{background:var(--gold);color:var(--mask-deep);border-color:var(--gold)}.st-dot.done{color:var(--gold-hi);border-color:var(--gold)}
+.st-card{background:rgba(0,0,0,.22);border:1px solid var(--edge);border-radius:14px;padding:1.3rem 1.4rem}
+.st-kicker{margin:0;font:600 .8rem var(--mono);color:var(--gold-hi);letter-spacing:.04em}
+.st-card h2{font:700 clamp(1.5rem,3vw,2rem)/1.1 var(--display);margin:.2rem 0 .6rem;color:var(--silk)}
+.st-story{font-size:1.1rem;max-width:62ch;margin:0 0 1.1rem}
+.st-two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.st-hw,.st-sw{border-radius:10px;padding:.9rem 1rem;background:var(--mask-dark);border:1px solid var(--edge)}
+.st-hw{border-color:var(--gold)}.st-sw{border-color:var(--ch2)}
+.st-hw>b,.st-sw>b{display:block;font:700 .95rem var(--display);margin-bottom:.6rem}
+.st-hw>b{color:var(--gold-hi)}.st-sw>b{color:var(--ch2)}
+.st-note{margin:.7rem 0 0;color:var(--muted);font-size:.92rem}
+.st-code{margin:0;background:#030a07;border:1px solid var(--edge);border-radius:8px;padding:.7rem .9rem;font:500 .95rem/1.65 var(--mono);color:var(--silk);white-space:pre-wrap;min-height:5.2rem}
+.st-code em{color:var(--ch2);font-style:normal}.st-code u{color:var(--gold-hi);text-decoration:none}
+.st-bridge{margin:1rem 0 0;padding:.8rem 1rem;border-left:4px solid #8be07a;background:rgba(139,224,122,.08);border-radius:0 8px 8px 0}
+.st-bridge i{font:700 .8rem var(--mono);color:#8be07a;font-style:normal;margin-right:.5rem}
+.st-nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1rem}
+.st-bits{display:flex;gap:4px;flex-wrap:wrap}
+.st-b{width:2.6rem;height:3rem;border-radius:8px;border:2px solid var(--edge);background:var(--mask-deep);color:var(--muted);font:700 1.1rem var(--mono);cursor:pointer;padding:0}
+.st-b.on{background:var(--gold);border-color:var(--gold);color:var(--mask-deep)}
+.st-b small{display:block;font:500 .6rem var(--mono);opacity:.8}
+.st-big{font:700 1.6rem var(--mono);color:var(--silk)}.st-big small{font:400 .85rem var(--body);color:var(--muted)}
+.st-bulb{width:3rem;height:3rem;border-radius:50%;background:var(--led-off);border:2px solid var(--edge);margin:.6rem 0;transition:.2s}
+.st-bulb.on{background:var(--led-on);box-shadow:0 0 22px var(--led-on);border-color:var(--led-on)}
+.st-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;align-items:center}
+.st-mem{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.st-cell{border:2px solid var(--edge);background:var(--mask-deep);border-radius:6px;padding:.25rem 0;text-align:center;font:600 .85rem var(--mono);color:var(--silk);cursor:pointer}
+.st-cell small{display:block;color:var(--muted);font-size:.6rem}.st-cell.sel{border-color:var(--gold);background:#3a3210}
+.st-in{width:3.4rem;font:600 1rem var(--mono);color:var(--silk);background:var(--mask-deep);border:1px solid var(--edge);border-radius:6px;padding:.4rem;text-align:center}
+.st-ins{display:flex;flex-direction:column;gap:3px;margin-bottom:.6rem}
+.st-i{display:flex;gap:.8rem;font:500 .95rem var(--mono);padding:.25rem .5rem;border-radius:6px;color:var(--muted)}.st-i.on{background:#3a3210;color:var(--silk)}.st-i b{color:var(--gold-hi);min-width:4.5rem}
+.st-chain{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}.st-chain span{background:var(--mask-deep);border:1px solid var(--gold);border-radius:8px;padding:.35rem .6rem;font:600 .85rem var(--display)}.st-chain i{color:var(--muted);font-style:normal}
+.st-leds{display:flex;gap:4px;margin-top:.5rem}.st-led{width:2.6rem;height:.9rem;border-radius:0 0 14px 14px;background:var(--led-off);border:1px solid var(--edge)}.st-led.on{background:var(--led-on);box-shadow:0 0 12px var(--led-on)}
+@media(max-width:760px){.st-two{grid-template-columns:1fr}.st-b{width:2rem;height:2.6rem}.st-mem{grid-template-columns:repeat(4,1fr)}}
