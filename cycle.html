@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One instruction | 8051 Microcontroller</title>
+  <meta name="description" content="Step through fetch, decode and execute for MOV A,#05H on an 8051.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="cycle">
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="8051 Microcontroller, start">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span>8051 Microcontroller</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="index.html">Start</a>
+    <a href="lab.html">Live simulator</a>
+    <a class="gh" href="https://github.com/chowdhrynida/8051-simulator">GitHub</a>
+  </nav>
+</header>
+
+<nav id="stepper" class="stepper" aria-label="Journey"></nav>
+
+<main class="stage">
+  <p class="count">Step 4 of 8</p>
+  <h1>One instruction</h1>
+
+  <p class="lede">Every instruction is the same three-part loop: fetch the bytes, decode the opcode, execute it. Step through <code>MOV A,#05H</code> and watch the bytes move through the chip.</p>
+  <div class="cycle-grid">
+    <div>
+      <div class="explain" aria-live="polite">
+        <p id="cyTitle" class="explain-title">Ready.</p>
+        <p id="cyText"></p>
+      </div>
+      <div class="notice">
+        <h2>Why step by step?</h2>
+        <p>On the real chip, both bytes of this instruction are fetched inside one machine cycle, which is 12 clock periods long. We slow it down here so you can see each move. The result is the same: A ends up holding the value.</p>
+      </div>
+    </div>
+    <div class="flowbox">
+      <svg id="flow" viewBox="0 0 560 350" role="img" aria-label="Block diagram of an 8051: program counter, program ROM, instruction decoder and accumulator connected by buses">
+        <!-- wires -->
+        <g class="wires">
+          <path id="pcRom"   d="M100 250 V130"/>
+          <path id="romDec"  d="M170 80 H230"/>
+          <path id="operand" d="M150 130 V190 H430"/>
+          <path id="decAcc"  d="M370 80 H480 V250"/>
+          <path id="busAcc"  d="M430 190 V250"/>
+        </g>
+        <text class="cap" x="248" y="182">data bus</text>
+        <text class="cap" x="108" y="196">address</text>
+
+        <!-- ROM -->
+        <g id="b-rom" class="blk">
+          <rect x="30" y="30" width="140" height="100" rx="10"/>
+          <text class="ttl" x="46" y="54">Program ROM</text>
+          <rect id="row0" class="row" x="38" y="66" width="124" height="26" rx="4"/>
+          <rect id="row1" class="row" x="38" y="96" width="124" height="26" rx="4"/>
+          <text class="mono" x="48" y="85">0000   74</text>
+          <text class="mono" id="row1txt" x="48" y="115">0001   05</text>
+        </g>
+
+        <!-- Decoder -->
+        <g id="b-dec" class="blk">
+          <rect x="230" y="30" width="140" height="100" rx="10"/>
+          <text class="ttl" x="246" y="54">Decoder</text>
+          <text class="val" id="irVal" x="246" y="94">--</text>
+          <text class="mnem" id="mnem" x="246" y="118"></text>
+        </g>
+
+        <!-- PC -->
+        <g id="b-pc" class="blk">
+          <rect x="30" y="250" width="140" height="80" rx="10"/>
+          <text class="ttl" x="46" y="274">Program counter</text>
+          <text class="val" id="pcVal" x="46" y="316">0000</text>
+        </g>
+
+        <!-- ACC -->
+        <g id="b-acc" class="blk">
+          <rect x="400" y="250" width="130" height="80" rx="10"/>
+          <text class="ttl" x="416" y="274">Accumulator A</text>
+          <text class="val" id="aVal" x="416" y="316">00</text>
+        </g>
+
+        <!-- travelling byte -->
+        <g id="packet" opacity="0" transform="translate(-100 -100)">
+          <rect width="60" height="26" rx="13"/>
+          <text id="packetTxt" x="30" y="19" text-anchor="middle">74</text>
+        </g>
+      </svg>
+      <div class="controls">
+        <div class="btns">
+          <button id="cyStep" type="button">Step</button>
+          <button id="cyAuto" type="button" class="ghost">Play all</button>
+          <button id="cyReset" type="button" class="ghost">Reset</button>
+        </div>
+        <label class="val-in">
+          Value to load (hex)
+          <input id="cyIn" type="text" value="05" maxlength="2" autocomplete="off" spellcheck="false">
+        </label>
+        <p class="counter"><span id="cyNo">Step 0 of 4</span> <span class="sep" aria-hidden="true"></span> <span id="cyCycles">0 machine cycles</span></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="pager" class="pager"></div>
+
+<footer class="foot">
+  <p>Built by Nida Chowdhry, MSc Physics.</p>
+  <p><a href="https://chowdhrynida.github.io">Academic site</a> <span class="sep" aria-hidden="true"></span> <a href="https://github.com/chowdhrynida">GitHub</a></p>
+</footer>
+
+<script src="sim.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

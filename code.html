@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Machine code | 8051 Microcontroller</title>
+  <meta name="description" content="See how an 8051 instruction turns into bytes: opcode, operands, length and timing.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="code">
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="8051 Microcontroller, start">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span>8051 Microcontroller</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="index.html">Start</a>
+    <a href="lab.html">Live simulator</a>
+    <a class="gh" href="https://github.com/chowdhrynida/8051-simulator">GitHub</a>
+  </nav>
+</header>
+
+<nav id="stepper" class="stepper" aria-label="Journey"></nav>
+
+<main class="stage">
+  <p class="count">Step 5 of 8</p>
+  <h1>Machine code</h1>
+
+  <p class="lede">The chip only understands bytes. An assembler turns readable instructions into those bytes. Type an instruction, or pick one, and see exactly what the CPU will fetch.</p>
+  <div class="asm-in">
+    <label for="asmIn" class="dim">Instruction</label>
+    <input id="asmIn" type="text" value="MOV A,#05H" autocomplete="off" spellcheck="false" autocapitalize="off">
+  </div>
+  <div class="chips" id="examples" role="group" aria-label="Example instructions"></div>
+  <div class="panel" id="asmOut" aria-live="polite"></div>
+  <div class="notice">
+    <h2>What to notice</h2>
+    <ul>
+      <li>The first byte is always the opcode. It tells the decoder what to do and how many more bytes follow.</li>
+      <li>The 8051 has 111 instructions, encoded in 255 of the 256 possible opcodes (A5H is reserved).</li>
+      <li>Instructions are 1, 2 or 3 bytes long and take 1, 2 or 4 machine cycles. Only MUL and DIV take 4.</li>
+    </ul>
+  </div>
+</main>
+
+<div id="pager" class="pager"></div>
+
+<footer class="foot">
+  <p>Built by Nida Chowdhry, MSc Physics.</p>
+  <p><a href="https://chowdhrynida.github.io">Academic site</a> <span class="sep" aria-hidden="true"></span> <a href="https://github.com/chowdhrynida">GitHub</a></p>
+</footer>
+
+<script src="sim.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

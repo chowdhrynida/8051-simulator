@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Run it | 8051 Microcontroller</title>
+  <meta name="description" content="Write 8051 assembly and watch registers, ports, LEDs, a 7-segment display and a scope respond.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="lab">
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="8051 Microcontroller, start">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span>8051 Microcontroller</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="index.html">Start</a>
+    <a href="lab.html">Live simulator</a>
+    <a class="gh" href="https://github.com/chowdhrynida/8051-simulator">GitHub</a>
+  </nav>
+</header>
+
+<nav id="stepper" class="stepper" aria-label="Journey"></nav>
+
+<main class="stage wide">
+  <p class="count">Step 7 of 8</p>
+  <h1>Run it</h1>
+
+  <p class="lede">This is the simulator core running in your browser. Write assembly and watch the model respond: registers, ports, LEDs, a 7-segment display and a scope trace and a UART terminal. The desktop app adds the circuit designer, LCD, keypad and a dual-channel oscilloscope.</p>
+  <section class="board" id="lab" aria-label="8051 lab">
+
+    <div class="bar">
+      <label class="field">
+        <span>Example</span>
+        <select id="preset"></select>
+      </label>
+      <div class="btns">
+        <button id="asmBtn" type="button" class="ghost">Assemble</button>
+        <button id="stepBtn" type="button">Step</button>
+        <button id="runBtn" type="button">Run</button>
+        <button id="resetBtn" type="button" class="ghost">Reset</button>
+      </div>
+      <label class="field">
+        <span>Speed</span>
+        <select id="speed">
+          <option value="0">2 instr/s</option>
+          <option value="1">10 instr/s</option>
+          <option value="2" selected>50 instr/s</option>
+          <option value="3">300 instr/s</option>
+          <option value="4">3000 instr/s</option>
+        </select>
+      </label>
+      <p id="status" class="status" role="status" aria-live="polite">Loading...</p>
+    </div>
+
+    <div class="cols">
+
+      <!-- left: code -->
+      <div class="col">
+        <div class="panel">
+          <h2><span class="ref">SRC1</span> Assembly</h2>
+          <textarea id="src" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="8051 assembly source"></textarea>
+          <ul id="errs" class="errs" role="alert"></ul>
+          <p class="hint">Ctrl+Enter assembles. Labels end with a colon. Supports MOV, ADD, SUBB, MUL, DIV, jumps, DJNZ, CJNE, stack, bit instructions and DB tables.</p>
+        </div>
+
+        <div class="panel">
+          <h2><span class="ref">ROM1</span> Listing</h2>
+          <div class="scroll listing-wrap" id="listingWrap">
+            <table class="tbl" id="listing"><tbody></tbody></table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2><span class="ref">TR1</span> Execution trace</h2>
+          <div class="scroll trace-wrap" id="traceWrap">
+            <table class="tbl" id="trace">
+              <thead><tr><th>Cycle</th><th>PC</th><th>Instruction</th><th>A</th><th>CY</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2><span class="ref">RAM1</span> Internal RAM</h2>
+          <div class="scroll"><table class="ram" id="ram"></table></div>
+          <p class="hint">Changed bytes flash. The current stack top is outlined, and the active register bank is tinted.</p>
+        </div>
+      </div>
+
+      <!-- right: instruments -->
+      <div class="col">
+
+        <div class="panel">
+          <h2><span class="ref">D1-D8</span> Port 1 LEDs <span class="dim">and</span> <span class="ref">DS1</span> Port 0 display</h2>
+          <div class="io">
+            <div class="leds" id="leds" aria-label="Port 1 LEDs"></div>
+            <svg id="seg" class="seg" viewBox="0 0 112 168" role="img" aria-label="Seven-segment display driven by port 0">
+              <rect x="0" y="0" width="112" height="168" rx="10" fill="#0a0d0c"/>
+              <rect id="s0" x="24" y="12" width="52" height="11" rx="5"/>
+              <rect id="s1" x="80" y="26" width="11" height="52" rx="5"/>
+              <rect id="s2" x="80" y="90" width="11" height="52" rx="5"/>
+              <rect id="s3" x="24" y="145" width="52" height="11" rx="5"/>
+              <rect id="s4" x="13" y="90" width="11" height="52" rx="5"/>
+              <rect id="s5" x="13" y="26" width="11" height="52" rx="5"/>
+              <rect id="s6" x="24" y="78" width="52" height="11" rx="5"/>
+              <circle id="s7" cx="98" cy="150" r="6"/>
+            </svg>
+            <dl class="ports">
+              <div><dt>P0</dt><dd id="p0">FF</dd></div>
+              <div><dt>P1</dt><dd id="p1">FF</dd></div>
+              <div><dt>P2</dt><dd id="p2">FF</dd></div>
+              <div><dt>P3</dt><dd id="p3">FF</dd></div>
+            </dl>
+          </div>
+          <p class="hint">An LED or segment lights when its pin is 1. Segment order is a, b, c, d, e, f, g, dp from bit 0.</p>
+        </div>
+
+        <div class="panel">
+          <h2><span class="ref">U1</span> Registers</h2>
+          <div class="regs">
+            <div class="reg"><span>A</span><b id="rA">00</b></div>
+            <div class="reg"><span>B</span><b id="rB">00</b></div>
+            <div class="reg"><span>PC</span><b id="rPC">0000</b></div>
+            <div class="reg"><span>SP</span><b id="rSP">07</b></div>
+            <div class="reg"><span>DPTR</span><b id="rDPTR">0000</b></div>
+            <div class="reg"><span>Cycles</span><b id="rCyc">0</b></div>
+          </div>
+          <div class="flags" id="flags" aria-label="PSW flags"></div>
+          <div class="banks">
+            <p class="bank-title">Register bank <b id="bankNo">0</b></p>
+            <div class="rn" id="rn"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2><span class="ref">SCOPE1</span> Oscilloscope</h2>
+          <div class="scope-bar">
+            <label class="field"><span class="ch1">CH1</span><select id="ch1"></select></label>
+            <label class="field"><span class="ch2">CH2</span><select id="ch2"></select></label>
+            <label class="field"><span>Time/div</span>
+              <select id="tdiv">
+                <option>5</option><option>10</option><option selected>20</option><option>50</option><option>100</option><option>500</option>
+              </select>
+            </label>
+          </div>
+          <canvas id="scope" class="scope" width="640" height="320" role="img" aria-label="Oscilloscope trace of two port pins"></canvas>
+          <p class="readout" id="freq">Waiting for CH1 to toggle.</p>
+          <p class="hint">Time/div is in machine cycles. With the 11.0592 MHz crystal, one machine cycle is about 1.085 microseconds.</p>
+        </div>
+
+        <div class="panel">
+          <h2><span class="ref">U2</span> Serial port (UART)</h2>
+          <pre class="uart-term" id="uartTerm" aria-label="Characters sent by the UART">Nothing sent yet.</pre>
+          <canvas id="uartWave" class="uart-wave" width="640" height="150" role="img" aria-label="UART frame on the TXD pin, one bit at a time"></canvas>
+          <p class="readout" id="uartInfo">Set up Timer 1 and SCON, then write a byte to SBUF.</p>
+          <div class="uart-rx">
+            <label class="field"><span>Send a character to RXD</span><input id="rxIn" type="text" maxlength="1" value="Z" autocomplete="off" spellcheck="false"></label>
+            <button id="rxBtn" type="button" class="ghost">Send</button>
+          </div>
+          <p class="hint">Choose the UART example to send HELLO. A bit lasts 32 x (256 - TH1) machine cycles, so TH1 = FDH gives 9600 baud. Receiving needs REN set (MOV SCON,#50H), and Timer 1 must be running.</p>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="pager" class="pager"></div>
+
+<footer class="foot">
+  <p>Built by Nida Chowdhry, MSc Physics.</p>
+  <p><a href="https://chowdhrynida.github.io">Academic site</a> <span class="sep" aria-hidden="true"></span> <a href="https://github.com/chowdhrynida">GitHub</a></p>
+</footer>
+
+<script src="sim.js"></script>
+<script src="pages.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hardware to software | 8051 Microcontroller</title>
+  <meta name="description" content="Watch one program run on the 8051 and on its software twin, from registers and memory to the UART.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="model.css">
+</head>
+<body data-page="model">
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="8051 Microcontroller, start">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span>8051 Microcontroller</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="index.html">Start</a>
+    <a href="lab.html">Live simulator</a>
+    <a class="gh" href="https://github.com/chowdhrynida/8051-simulator">GitHub</a>
+  </nav>
+</header>
+
+<nav id="stepper" class="stepper" aria-label="Journey"></nav>
+
+<main class="stage">
+  <p class="count">Step 6 of 8</p>
+  <h1>Hardware to software</h1>
+
+  <p class="lede">A simulator is a second chip made of code. Three ideas are enough to build it.</p>
+  <div class="rules">
+    <div class="rule"><i>1</i><h3>A part becomes a value</h3><p>A register is one number kept to 8 bits. Memory is an array of bytes. A pin is one bit of a port value.</p></div>
+    <div class="rule"><i>2</i><h3>A behaviour becomes a function</h3><p>Each opcode is a few lines that read and change those values, exactly as the chip's logic would.</p></div>
+    <div class="rule"><i>3</i><h3>Time becomes a counter</h3><p>Every instruction adds its machine cycles. Timers and the UART simply count those cycles.</p></div>
+  </div>
+
+  <h2 class="mini" style="font-size:1.3rem;margin-top:0">See it happen</h2>
+  <p class="lede">Step through one real program. On the left is the chip. On the right is the same part inside the simulator, changing at the same moment. The program ends by sending the letter A out of the serial port.</p>
+
+  <div class="tw-ctl">
+    <button id="step" type="button">Step</button>
+    <button id="play" type="button" class="ghost">Play all</button>
+    <button id="reset" type="button" class="ghost">Reset</button>
+    <span class="tw-cur" id="cur" aria-live="polite"></span>
+  </div>
+
+  <div class="tw-heads"><span>Real chip</span><span>Our simulator</span></div>
+  <div class="tw-stage" id="stage">
+    <div class="tw-bus"></div>
+    <div class="tw-pk" id="pk"></div><div class="tw-pkl" id="pkl"></div>
+  </div>
+  <div class="tw-cap" id="cap" aria-live="polite"></div>
+
+  <div class="section">
+    <h2>Every part, side by side</h2>
+    <p>The same translation holds for the whole chip. Devices outside the chip are the same idea: they watch a pin value and redraw themselves.</p>
+    <div class="scroll panel">
+      <table class="tests cheat">
+        <thead><tr><th>On the chip</th><th>In the simulator</th><th>Code</th></tr></thead>
+        <tbody>
+          <tr><td>Accumulator, B</td><td>Two 8-bit values</td><td><code>cpu.acc = (a + v) &amp; 0xFF</code></td></tr>
+          <tr><td>Program counter</td><td>A 16-bit value that moves by instruction length</td><td><code>cpu.pc = (cpu.pc + 1) &amp; 0xFFFF</code></td></tr>
+          <tr><td>Code memory</td><td>A 64 KB byte array filled by the assembler</td><td><code>cpu.rom[cpu.pc]</code></td></tr>
+          <tr><td>Internal RAM, R0 to R7</td><td>A byte array. Rn is a bank offset into it</td><td><code>cpu.iram[cpu.bank * 8 + n]</code></td></tr>
+          <tr><td>Flags (PSW)</td><td>Bits set after each ALU operation</td><td><code>cpu.cy = r &gt; 0xFF ? 1 : 0</code></td></tr>
+          <tr><td>Ports P0 to P3</td><td>Four values, one bit per pin</td><td><code>cpu.sfr[0x90]</code></td></tr>
+          <tr><td>LED, 7-segment, scope</td><td>Widgets that read a port value and redraw</td><td><code>led.on = (p1 &gt;&gt; bit) &amp; 1</code></td></tr>
+          <tr><td>Timer 1</td><td>Counter that grows with machine cycles</td><td><code>cpu.sfr[0x8D]  // TH1</code></td></tr>
+          <tr><td>Serial port</td><td>A 10-bit frame timed by TH1, then TI is set</td><td><code>cpu.txStart(byte)</code></td></tr>
+          <tr><td>Crystal</td><td>A constant: 12 periods per machine cycle</td><td><code>cycles * 12 / 11059200</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Why 11.0592 MHz?</h2>
+    <p>The UART makes its bit clock by dividing the crystal. 11.0592 MHz divides into the standard baud rates with nothing left over, so the serial port matches the other device exactly. A 12 MHz crystal cannot. The table shows the baud rate each Timer 1 reload value really gives.</p>
+    <div class="scroll panel">
+      <table class="tests" id="baudTbl">
+        <thead><tr><th>Crystal</th><th>9600 (TH1 = FDH)</th><th>4800 (FAH)</th><th>2400 (F4H)</th><th>1200 (E8H)</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Is it accurate?</h2>
+    <p>A simulator is only useful if it matches the chip. Below, each program is run on the simulator engine on this page, right now, and compared with the result worked out by hand from the 8051 instruction set. Cycle counts follow the standard timing of the MCS-51 instruction set, and the UART frame follows the mode 1 baud formula.</p>
+    <div class="scroll panel">
+      <table class="tests" id="tests">
+        <thead><tr><th>Check</th><th>Expected</th><th>Simulator</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="sum" id="testSum"></p>
+    </div>
+  </div>
+</main>
+
+<div id="pager" class="pager"></div>
+
+<footer class="foot">
+  <p>Built by Nida Chowdhry, MSc Physics.</p>
+  <p><a href="https://chowdhrynida.github.io">Academic site</a> <span class="sep" aria-hidden="true"></span> <a href="https://github.com/chowdhrynida">GitHub</a></p>
+</footer>
+
+<script src="sim.js"></script>
+<script src="pages.js"></script>
+<script src="model.js"></script>
+</body>
+</html>

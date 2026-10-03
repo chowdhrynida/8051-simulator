@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The full app | 8051 Microcontroller</title>
+  <meta name="description" content="The full 8051 simulator: circuit designer, oscilloscope and Windows download.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="app">
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="8051 Microcontroller, start">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span>8051 Microcontroller</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="index.html">Start</a>
+    <a href="lab.html">Live simulator</a>
+    <a class="gh" href="https://github.com/chowdhrynida/8051-simulator">GitHub</a>
+  </nav>
+</header>
+
+<nav id="stepper" class="stepper" aria-label="Journey"></nav>
+
+<main class="stage">
+  <p class="count">Step 8 of 8</p>
+  <h1>The full app</h1>
+
+  <p class="lede">The full simulator is a Python and tkinter program, built from scratch between August 2025 and March 2026. It was presented at the JIGNYASA College Fest as a tool that connects microcontroller theory with hands-on simulation.</p>
+  <section class="app-inner" id="app">
+    <article class="feat">
+      <div class="feat-text">
+        <h3>Simulator core</h3>
+        <p>Emulates the 8051 architecture: accumulator, B register, PC, SP, DPTR and the PSW flags, four register banks, timer/counter and interrupt control, and a serial/UART module.</p>
+        <p>Run a program step by step or continuously, and follow it in a live execution trace.</p>
+      </div>
+      <figure class="shot">
+        <img src="assets/simulator.png" alt="The desktop simulator showing registers and the execution trace" onerror="this.parentNode.classList.add('missing')">
+        <figcaption>Add a screenshot at <code>assets/simulator.png</code></figcaption>
+      </figure>
+    </article>
+
+    <article class="feat">
+      <div class="feat-text">
+        <h3>Circuit designer</h3>
+        <p>A virtual circuit board where the 8051's ports connect to an LCD, LEDs, a 7-segment display, stepper and DC motors, an HC-SR04 distance sensor and passive components.</p>
+        <p>Upload your code and watch the hardware respond in real time.</p>
+      </div>
+      <figure class="shot">
+        <img src="assets/designer.png" alt="The circuit designer with an 8051 wired to an LCD and LEDs" onerror="this.parentNode.classList.add('missing')">
+        <figcaption>Add a screenshot at <code>assets/designer.png</code></figcaption>
+      </figure>
+    </article>
+
+    <article class="feat">
+      <div class="feat-text">
+        <h3>Virtual oscilloscope</h3>
+        <p>A dual-channel CRO with DUAL and ADD modes, full vertical and horizontal controls and a trigger section.</p>
+        <p>It measures frequency automatically from the live waveform, so you can check a timer's output the way you would on a bench.</p>
+      </div>
+      <figure class="shot">
+        <img src="assets/cro.png" alt="The desktop oscilloscope showing two channels" onerror="this.parentNode.classList.add('missing')">
+        <figcaption>Add a screenshot at <code>assets/cro.png</code></figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section class="dl" id="download">
+    <div class="dl-text">
+      <h2>Get the full simulator</h2>
+      <p>Download the Windows app, or run it from source with Python 3. tkinter comes with Python on Windows and macOS.</p>
+      <p class="hint">Windows may show "Windows protected your PC" the first time because the app is not signed. Choose More info, then Run anyway.</p>
+      <a class="big-btn" href="https://github.com/chowdhrynida/8051-simulator/releases/latest">Download for Windows</a>
+    </div>
+    <pre class="term" aria-label="Terminal commands"><code>git clone https://github.com/chowdhrynida/8051-simulator
+cd 8051-simulator
+python main.py</code></pre>
+    <!-- EDIT: change main.py to your real entry file -->
+  </section>
+</main>
+
+<div id="pager" class="pager"></div>
+
+<footer class="foot">
+  <p>Built by Nida Chowdhry, MSc Physics.</p>
+  <p><a href="https://chowdhrynida.github.io">Academic site</a> <span class="sep" aria-hidden="true"></span> <a href="https://github.com/chowdhrynida">GitHub</a></p>
+</footer>
+
+<script src="sim.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The chip | 8051 Microcontroller</title>
+  <meta name="description" content="A real 8051 is a 40-pin package. Explore what every pin does.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="chip">
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="8051 Microcontroller, start">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span>8051 Microcontroller</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="index.html">Start</a>
+    <a href="lab.html">Live simulator</a>
+    <a class="gh" href="https://github.com/chowdhrynida/8051-simulator">GitHub</a>
+  </nav>
+</header>
+
+<nav id="stepper" class="stepper" aria-label="Journey"></nav>
+
+<main class="stage">
+  <p class="count">Step 1 of 8</p>
+  <h1>The chip</h1>
+
+  <p class="lede">A real 8051 is a small black package with 40 metal legs. Every leg has one job. Point at a pin, or tap it, to see what it does.</p>
+  <div class="split">
+    <div id="dip" aria-label="Interactive pin diagram of a 40-pin 8051"></div>
+    <div>
+      <div class="legend" id="legend" role="group" aria-label="Pin groups. Choose one to highlight it."></div>
+      <div class="panel info" id="pinInfo" aria-live="polite"></div>
+      <div class="notice">
+        <h2>What to notice</h2>
+        <ul>
+          <li>32 of the 40 pins are I/O: four 8-bit ports.</li>
+          <li>Port 3 pins double as serial, interrupt, timer and memory-strobe pins.</li>
+          <li>Only 8 pins run the machine itself: power, reset, the clock and the memory control lines.</li>
+          <li>Software never sees these wires. It sees registers such as P1 and P3, and the next pages show how they connect.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="pager" class="pager"></div>
+
+<footer class="foot">
+  <p>Built by Nida Chowdhry, MSc Physics.</p>
+  <p><a href="https://chowdhrynida.github.io">Academic site</a> <span class="sep" aria-hidden="true"></span> <a href="https://github.com/chowdhrynida">GitHub</a></p>
+</footer>
+
+<script src="sim.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

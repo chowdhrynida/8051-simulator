@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Memory | 8051 Microcontroller</title>
+  <meta name="description" content="The 8051 memory map: register banks, bit-addressable RAM, SFRs and program memory.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="memory">
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="8051 Microcontroller, start">
+    <img src="assets/logo.svg" alt="" width="34" height="34">
+    <span>8051 Microcontroller</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="index.html">Start</a>
+    <a href="lab.html">Live simulator</a>
+    <a class="gh" href="https://github.com/chowdhrynida/8051-simulator">GitHub</a>
+  </nav>
+</header>
+
+<nav id="stepper" class="stepper" aria-label="Journey"></nav>
+
+<main class="stage">
+  <p class="count">Step 3 of 8</p>
+  <h1>Memory</h1>
+
+  <p class="lede">The 8051 keeps program and data in separate memories, which is called a Harvard design. Select a region, or type an address, to see what lives there.</p>
+  <div class="split" style="grid-template-columns:minmax(0,6fr) minmax(0,5fr)">
+    <div>
+      <div class="mem">
+        <div>
+          <h3>Internal data memory</h3>
+          <div class="mcol">
+            <button type="button" class="mseg sfr" data-r="sfr">Special function registers<small>80H to FFH</small></button>
+            <button type="button" class="mseg scratch" data-r="scratch">General RAM and stack<small>30H to 7FH</small></button>
+            <button type="button" class="mseg bits" data-r="bits">Bit-addressable RAM<small>20H to 2FH</small></button>
+            <button type="button" class="mseg banks" data-r="banks">Register banks 0 to 3<small>00H to 1FH</small></button>
+          </div>
+        </div>
+        <div>
+          <h3>Program memory</h3>
+          <div class="mcol">
+            <button type="button" class="mseg ext" data-r="ext">External code<small>1000H to FFFFH</small></button>
+            <button type="button" class="mseg rom" data-r="rom">On-chip ROM<small>0000H to 0FFFH</small></button>
+          </div>
+        </div>
+      </div>
+      <div class="addr-tool panel">
+        <label>Where is address <input id="addr" type="text" value="2A" maxlength="3" autocomplete="off" spellcheck="false" aria-describedby="addrOut"> in data memory?</label>
+        <p id="addrOut" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="panel info" id="regionInfo" aria-live="polite"></div>
+  </div>
+</main>
+
+<div id="pager" class="pager"></div>
+
+<footer class="foot">
+  <p>Built by Nida Chowdhry, MSc Physics.</p>
+  <p><a href="https://chowdhrynida.github.io">Academic site</a> <span class="sep" aria-hidden="true"></span> <a href="https://github.com/chowdhrynida">GitHub</a></p>
+</footer>
+
+<script src="sim.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>
